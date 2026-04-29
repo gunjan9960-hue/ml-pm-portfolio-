@@ -1,0 +1,56 @@
+# Project 1 — KKBOX Churn Prediction
+
+## The business problem
+KKBOX is a music streaming app with 992,931 subscribers.
+6.4% churn every month. Which users are about to cancel — and why?
+
+## Dataset
+- Source: WSDM KKBox Churn Prediction Challenge (Kaggle)
+- Size: 8.6 GB across 4 files
+- Users: 992,931 | Churners: 63,547
+
+## Model
+- Algorithm: XGBoost (300 trees, depth 6, learning rate 0.05)
+- Features: 14 across 3 tiers — intent, behaviour, profile
+- Train/test split: 80/20
+
+## Results
+
+| Metric | Target | Achieved | Status |
+|--------|--------|---------|--------|
+| AUC | 0.75–0.85 | **0.981** | PASS |
+| F1 Score | 0.55–0.65 | **0.749** | PASS |
+
+## Feature importance
+
+| Rank | Feature | Importance | PM action |
+|------|---------|-----------|-----------|
+| 1 | days_until_expiry | 39.9% | Expiry countdown campaign |
+| 2 | is_auto_renew | 35.4% | Auto-renew off alert |
+| 3 | is_cancel | 18.8% | Cancellation flow redesign |
+| 4–14 | All others | 6.1% | Low priority |
+
+## The key finding
+> KKBOX churn is a subscription mechanics problem, not an engagement problem.
+
+Total listening time contributed less than 0.3% of predictive power.
+Users leave because of billing friction — not because they stopped enjoying music.
+
+This means: stop investing in recommendation algorithms to reduce churn.
+Start investing in renewal UX, expiry notifications, and cancellation flow redesign.
+
+## Product roadmap
+
+| Priority | Feature | Trigger | Impact |
+|---------|---------|---------|--------|
+| P0 | Auto-renew off alert | User turns off auto-renew | Very High |
+| P0 | Expiry countdown campaign | 14 days before expiry | Very High |
+| P1 | Cancellation flow redesign | User initiates cancel | High |
+| P2 | Price match on renewal | Discounted user renewing | Medium |
+
+## Business impact
+- 47,587 at-risk users correctly identified
+- At $10 ARPU and 30% retention rate: **$142,000/month recoverable revenue**
+
+## Links
+- [Kaggle notebook](https://kaggle.com/gunjan9960) — add your link here
