@@ -1,0 +1,81 @@
+# Project 2 — Credit Card Fraud Detection
+
+## The business problem
+A bank processes 1.3M credit card transactions.
+Only 0.58% are fraudulent — but missing them costs millions.
+Build a model that flags fraud in real time without blocking innocent customers.
+
+## Dataset
+- Source: Credit Card Transactions Fraud Detection (Kaggle — kartik2112)
+- Training: 1,296,675 transactions | 7,506 fraud (0.58%)
+- Test: 555,719 transactions | 2,145 fraud (0.39%)
+
+## The core challenge — class imbalance
+99.42% legitimate vs 0.58% fraud.
+A model that predicts "not fraud" every time is 99.42% accurate — and useless.
+Solution: scale_pos_weight = 172 (tells model to weight fraud 172x more heavily)
+
+## Model
+- Algorithm: XGBoost with scale_pos_weight=172
+- Features: amount, category, hour, day of week, age, city population
+- Key engineering: transaction hour extracted from timestamp
+
+## Results
+
+| Metric | Value | Plain English |
+|--------|-------|---------------|
+| AUC | 0.997 | Near-perfect fraud ranking |
+| Recall | 96.4% | Catches 96 of every 100 fraud cases |
+| Precision | 18.7% | Of flagged txns, 18.7% are real fraud |
+| F1 | 0.313 | Aggressive model — high recall, lower precision |
+
+## The confusion matrix
+
+| | Predicted legit | Predicted fraud |
+|--|--|--|
+| **Actually legit** | 544,561 ✓ | 9,013 wrongly blocked |
+| **Actually fraud** | 78 missed | 2,067 caught ✓ |
+
+## Feature importance
+
+| Feature | Importance | PM action |
+|---------|-----------|-----------|
+| Transaction amount | 59.3% | Flag transactions >$400 for confirmation |
+| Hour of day | 20.3% | Extra friction 10pm–2am |
+| Merchant category | 12.9% | Stricter rules for online shopping |
+| Age | 4.4% | Low priority |
+| City population | 2.0% | Not useful |
+
+## Key findings
+
+**Finding 1 — Online shopping is 10x riskier**
+shopping_net: 1.76% fraud rate vs health_fitness: 0.15%
+
+**Finding 2 — Fraudsters operate at night**
+Hour 22–23: 2.86% fraud rate vs Hour 7: 0.13% — 22x difference
+
+**Finding 3 — Fraudulent transactions are 8x larger**
+Avg fraud: $531 vs avg legitimate: $67
+
+## The PM tradeoff
+9,013 innocent customers wrongly blocked to catch 2,067 fraudsters.
+This is a business decision, not a model failure:
+- Premium card brand → reduce weight, accept more fraud, protect experience
+- Protection-first card → keep weight, maximise fraud caught
+
+## Product roadmap
+
+| Priority | Feature | Trigger | What to build |
+|---------|---------|---------|--------------|
+| P0 | Amount trigger | Transaction >$400 | Push notification: "Did you make this purchase?" |
+| P0 | Night friction | 10pm–2am transaction | One-tap confirm in app |
+| P1 | Category rules | Online shopping | Stricter model threshold |
+| P2 | False positive recovery | Card wrongly blocked | One-tap unblock flow |
+
+## Business impact
+- Fraud caught value: **$1,092,113**
+- Fraud missed value: $41,212
+- ROI: 26x on fraud prevention vs missed fraud
+
+## Links
+- [Kaggle notebook](https://kaggle.com/gunjan9960) — add your link here
