@@ -14,7 +14,7 @@
 | 2 | [02-fraud-detection.ipynb](./02-fraud-detection.ipynb) | XGBoost + Class Imbalance | AUC 0.997 · Recall 96.4% | 9,013 false positives is a PM decision not a model failure |
 | 3 | [03-mall-segmentation.ipynb](./03-mall-segmentation.ipynb) | K-Means + 2x2 Quadrant | 5 segments | High-income customers not spending = product problem not marketing |
 | 4 | [04-rfm-segmentation.ipynb](./04-rfm-segmentation.ipynb) | RFM Analysis | 7 segments | 22% of customers = 65% of revenue — protect Champions first |
-| 5 | Movie Recommendations | Collaborative Filtering | Coming soon | — |
+| 5 | [05-movie-recommendations.ipynb](./05-movie-recommendations.ipynb) | SVD Collaborative Filtering | RMSE 1.993 | Recommendation quality is a data collection problem not a model problem |
 | 6 | Amazon Recommendations | Content-based + Hybrid | Coming soon | — |
 | 7 | Sales Forecasting | Time Series / Prophet | Coming soon | — |
 | 8 | Dynamic Pricing | Regression | Coming soon | — |
@@ -27,7 +27,7 @@ Every project follows the same structure:
 
 1. **Explore** — understand the data and signals before modelling
 2. **Engineer** — create PM-relevant features from raw data
-3. **Model** — XGBoost, K-Means, RFM, or appropriate algorithm
+3. **Model** — XGBoost, K-Means, RFM, SVD, or appropriate algorithm
 4. **Evaluate** — business impact in users and revenue, not just accuracy
 5. **Roadmap** — model output becomes a prioritised product decision list
 
@@ -40,6 +40,7 @@ Every project follows the same structure:
 - K-Means clustering — customer segmentation, elbow method
 - 2x2 quadrant analysis — business logic segmentation
 - RFM analysis — recency, frequency, monetary scoring
+- SVD matrix factorisation — collaborative filtering, sparsity handling
 - PM insight extraction — turning model output into product roadmaps
 
 ---
@@ -51,3 +52,4 @@ Every project follows the same structure:
 
 ---
 
+*Built as part of an 11-week ML learning roadmap — 2026*
